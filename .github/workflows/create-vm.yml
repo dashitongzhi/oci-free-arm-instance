@@ -58,7 +58,7 @@ jobs:
           
           # Write SSH Key
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > /home/runner/my_ssh_key.pub
-          # Launch VM - minimal required parameters
+          # Launch VM (50GB Boot Volume to avoid Quota Limits)
           OCI_OUTPUT=$(oci compute instance launch \
             --compartment-id "$COMPARTMENT_ID" \
             --availability-domain "$AD_NAME" \
@@ -67,7 +67,9 @@ jobs:
             --subnet-id "$SUBNET_ID" \
             --image-id "$IMAGE_ID" \
             --ssh-authorized-keys-file "/home/runner/my_ssh_key.pub" \
-            --debug 2>&1 || true)
+            --assign-public-ip true \
+            --display-name "coolify-vm" \
+            --boot-volume-size-in-gbs 200 2>&1 || true)
           # Store Log for Discord
           echo "log_data<<EOF" >> $GITHUB_OUTPUT
           echo "$OCI_OUTPUT" >> $GITHUB_OUTPUT
