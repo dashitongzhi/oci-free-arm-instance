@@ -66,7 +66,8 @@ jobs:
             --shape-config '{"ocpus":4,"memoryInGBs":24}' \
             --subnet-id "$SUBNET_ID" \
             --image-id "$IMAGE_ID" \
-            --ssh-authorized-keys-file "/home/runner/my_ssh_key.pub" 2>&1 || true)
+            --ssh-authorized-keys-file "/home/runner/my_ssh_key.pub" \
+            --debug 2>&1 || true)
           # Store Log for Discord
           echo "log_data<<EOF" >> $GITHUB_OUTPUT
           echo "$OCI_OUTPUT" >> $GITHUB_OUTPUT
