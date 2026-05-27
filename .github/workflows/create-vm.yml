@@ -87,16 +87,15 @@ jobs:
             exit 1
           fi
       - name: Send Discord Notification
-        if: always()
+        if: contains(steps.create_vm.outputs.log_data, 'PROVISIONING')
         uses: sarisia/actions-status-discord@v1.15.4
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Set color: Green for Success, Orange for Capacity Wait, Red for Error
-          color: ${{ steps.create_vm.outcome == 'success' && '0x28a745' || '0xdc3545' }}
-          title: "OCI Bot Status"
+          color: '0x28a745'
+          title: "🚀 OCI VM Created!"
           description: |
-            **Result:**
-            ${{ contains(steps.create_vm.outputs.log_data, 'Out of host capacity') && '⏳ Waiting for Capacity...' || contains(steps.create_vm.outputs.log_data, 'PROVISIONING') && '🚀 VM CREATED! DISABLE WORKFLOW!' || '❌ Error' }}
+            **Result:** VM is being created!
+
             **Details:**
             ```json
             ${{ steps.create_vm.outputs.log_data }}
