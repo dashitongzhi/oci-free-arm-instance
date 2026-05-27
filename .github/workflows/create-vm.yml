@@ -10,10 +10,10 @@ env:
   SUPPRESS_LABEL_WARNING: true
 
   # 2. Mumbai Configuration (Verified)
-  OCI_CLI_REGION: "ap-mumbai-1"
-  AD_NAME: "qaqb:AP-MUMBAI-1-AD-1"
-  IMAGE_ID: "ocid1.image.oc1.ap-mumbai-1.aaaaaaaahzcec4tjbvlvkptojwrc5zo4zazgdnwwyg5f5ayjpkreigtzwpxa"
-  SUBNET_ID: "ocid1.subnet.oc1.ap-mumbai-1.aaaaaaaal7czmysz7hqztjcrt72oaoipcqo6rin4w5bvq64vfrxbjtw7nx4q"
+  OCI_CLI_REGION: "us-phoenix-1"
+  AD_NAME: "jZJG:PHX-AD-1"
+  IMAGE_ID: "ocid1.image.oc1.phx.aaaaaaaarmcelmbnwximabxo7qvea5cv56bjfa3jnpmgvsfpkeq2e6w4w4ta"
+  SUBNET_ID: "ocid1.subnet.oc1.phx.aaaaaaaaobcjobgrcwlbvts6hvi7xn5dcml2dbxuh5wiropif7fcyuijadaa"
 
   # 3. Secrets
   COMPARTMENT_ID: ${{ secrets.OCI_COMPARTMENT_ID }}
@@ -63,13 +63,13 @@ jobs:
             --compartment-id "$COMPARTMENT_ID" \
             --availability-domain "$AD_NAME" \
             --shape "VM.Standard.A1.Flex" \
-            --shape-config '{"ocpus":2,"memoryInGBs":12}' \
+            --shape-config '{"ocpus":4,"memoryInGBs":24}' \
             --subnet-id "$SUBNET_ID" \
             --image-id "$IMAGE_ID" \
             --ssh-authorized-keys-file "/home/runner/my_ssh_key.pub" \
             --assign-public-ip true \
             --display-name "coolify-vm" \
-            --boot-volume-size-in-gbs 50 2>&1 || true)
+            --boot-volume-size-in-gbs 200 2>&1 || true)
           # Store Log for Discord
           echo "log_data<<EOF" >> $GITHUB_OUTPUT
           echo "$OCI_OUTPUT" >> $GITHUB_OUTPUT
