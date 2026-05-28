@@ -75,10 +75,6 @@ jobs:
           echo "log_data<<EOF" >> $GITHUB_OUTPUT
           echo "$OCI_OUTPUT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-          # Debug: Print OCI output
-          echo "=== OCI OUTPUT ==="
-          echo "$OCI_OUTPUT"
-          echo "=================="
           # --- SMART CHECK LOGIC ---
           if echo "$OCI_OUTPUT" | grep -q '"lifecycle-state": "PROVISIONING"'; then
             echo "✅ VICTORY! VM is being created."
